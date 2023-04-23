@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
+import Notiflix from 'notiflix';
 //import axios from 'axios';
-/*
-const appStylesOld = {
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  fontSize: '24px',
-  gap: '12px',
-  color: '#010101',
-};*/
 
 const appStyles = {
   display: 'grid',
