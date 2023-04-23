@@ -107,7 +107,7 @@ export class App extends Component {
   };
 
   render() {
-    const {query, photos} =this.state;
+    //const {query, photos} =this.state;
     return <div style={{ ...appStyles }}>
       goit-react-hw-03-image-finder
       <p>
