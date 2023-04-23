@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Notiflix from 'notiflix';
+import Searchbar from './searchbar';
 //import axios from 'axios';
 
 import * as ImageService from './service/imagesFetch';
@@ -15,7 +16,7 @@ export class App extends Component {
   state = {
     query: '',
     page: 1,
-    photos: [],    
+    photos: [],
     total: 0,
     totalPhotos: 0,
     showLoadMore: false,
@@ -24,8 +25,7 @@ export class App extends Component {
     error: '',
   };
 
-  async dataToState(query, page = 1, update = false, prevState = {}) { 
-
+  async dataToState(query, page = 1, update = false, prevState = {}) {
     this.setState({ isLoading: true });
     try {
       const data = await ImageService.getImages(query, page); //"flower", 2
@@ -33,14 +33,13 @@ export class App extends Component {
       const { hits, total, totalHits } = data;
       if (!update) {
         this.setState({
-          photos: [...hits],          
+          photos: [...hits],
         });
-      }
-      else { 
-        console.log("Must be update");
+      } else {
+        console.log('Must be update');
         this.setState({
           photos: [...prevState.photos, ...hits],
-          showLoadMore: page < Math.ceil(totalHits / 12)
+          showLoadMore: page < Math.ceil(totalHits / 12),
         });
       }
       this.setState({
@@ -53,51 +52,34 @@ export class App extends Component {
     } finally {
       this.setState({ isLoading: false });
     }
-    
   }
 
- /*async componentDidMount() { 
+  /*async componentDidMount() { 
     await this.dataToState("flower", 2, false);
 
   }*/
 
   async componentDidUpdate(prevProps, prevState) {
-    
-    const {query,  page} = this.state;
+    const { query, page } = this.state;
     const update = false;
-    if ( prevState.query !== query || prevState.page !== page)
-    {
+    if (prevState.query !== query || prevState.page !== page) {
       this.setState({ isLoading: true });
       update = true;
       await this.dataToState(query, page, update, prevState);
-      {/*
-      ImageService.getImages(query, page)
-        .then(data => {
-          if (!data.hits.length) {
-            this.setState({ isEmpty: true });
-            return;
-          }
 
-          this.setState(prevState => ({
-            photos: [...prevState.photos, ...data.photos],
-
-            showLoadMore: this.state.page < Math.ceil(data.total_results / 12),
-          }));
-
-        })
-        .catch(error => this.setState({ error: error.message }))
-        .finally(this.setState({ isLoading: false }));
-      */}
     }
   }
 
   onSubmit = query => {
     this.setState({
       query,
-      photo: [],
       page: 1,
-      isEmpty: false,
+      photos: [],
+      total: 0,
+      totalPhotos: 0,
       showLoadMore: false,
+      isLoading: false, //
+      isEmpty: false,
       error: '',
     });
   };
@@ -107,12 +89,11 @@ export class App extends Component {
   };
 
   render() {
-    //const {query, photos} =this.state;
-    return <div style={{ ...appStyles }}>
-      goit-react-hw-03-image-finder
-      <p>
-        
-    </p>
-    </div>;
+    const { query, photos } = this.state;
+    return (
+        <div style={{ ...appStyles }}>
+        <Searchbar onFormSubmit={this.onSubmit} query={query} />
+        </div>
+    );
   }
 }
