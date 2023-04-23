@@ -7,34 +7,36 @@ class Searchbar extends Component {
     query: '',
   };
 
-  handleChange = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({ [name]: value.trim() });
+  onHandleChange = event => {
+    const { name, value } = event.currentTarget;
+      this.setState({ [name]: value.trim() });
+      console.log(value);
   };
 
-  clearFormFields = e => {
-    e.preventDefault();
-    const query = e.target.query.value;
-    this.setState({ query: '' });
-    this.props.onSubmit({
-      query,
-    });
+  handleSubmit = event => {
+    event.preventDefault();
+      const query = event.target.query.value;
+      this.setState({query: ''});
+      this.props.onFormSubmit({query,});
+      console.log("submit", query);
   };
 
   render() {
     return (
       <header className="Searchbar">
-        <form className="SearchForm">
+        <form onSubmit={this.handleSubmit} className="SearchForm" >
           <button type="submit" className="SearchForm-button">
             <span className="SearchForm-button-label">Search</span>
           </button>
           <input
-            className="SearchForm-input"
-            type="text"
-            name="query"
-            autocomplete="off"
-            autofocus
-            placeholder="Search images and photos"
+                    className="SearchForm-input"
+                    type="text"
+                    name="query"
+                    autoComplete="off"
+                    autoFocus
+                    placeholder="Search images and photos"
+                    onChange={this.onHandleChange}
+                    value={this.state.query}
           />
         </form>
       </header>
@@ -43,3 +45,6 @@ class Searchbar extends Component {
 }
 
 export default Searchbar;
+Searchbar.propTypes = {
+  onFormSubmit: PropTypes.func.isRequired,
+};

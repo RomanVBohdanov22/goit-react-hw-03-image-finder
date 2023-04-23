@@ -29,7 +29,7 @@ export class App extends Component {
     this.setState({ isLoading: true });
     try {
       const data = await ImageService.getImages(query, page); //"flower", 2
-      //console.log("here data", data);
+
       const { hits, total, totalHits } = data;
       if (!update) {
         this.setState({
@@ -46,7 +46,7 @@ export class App extends Component {
         total: total,
         totalPhotos: totalHits,
       });
-      console.log(this.state.photos);
+      //console.log(this.state.photos);
     } catch (error) {
       this.setState({ error: error.message });
     } finally {
@@ -61,18 +61,19 @@ export class App extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
     const { query, page } = this.state;
-    const update = false;
-    if (prevState.query !== query || prevState.page !== page) {
-      this.setState({ isLoading: true });
-      update = true;
-      await this.dataToState(query, page, update, prevState);
+   
+    if (prevState.query !== query || prevState.page !== page) {     
+      
+      await this.dataToState(query, page, true, prevState);
 
     }
+    
   }
 
-  onSubmit = query => {
+  onFormSubmit = ({ query }) => {
+    console.log(query);
     this.setState({
-      query,
+      query: query,
       page: 1,
       photos: [],
       total: 0,
@@ -92,7 +93,7 @@ export class App extends Component {
     const { query, photos } = this.state;
     return (
         <div style={{ ...appStyles }}>
-        <Searchbar onFormSubmit={this.onSubmit} query={query} />
+        <Searchbar onFormSubmit={this.onFormSubmit} />
         </div>
     );
   }
