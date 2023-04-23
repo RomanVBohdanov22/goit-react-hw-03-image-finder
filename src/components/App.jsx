@@ -15,24 +15,40 @@ export class App extends Component {
   state = {
     query: '',
     page: 1,
-    photos: [],
+    photos: [],    
+    total: 0,
+    totalPhotos: 0,
     showLoadMore: false,
     isLoading: false, //
     isEmpty: false,
     error: '',
   };
 
-  async componentDidMount() { 
+async dataToState(query, page = 1) { 
+
     this.setState({ isLoading: true });
     try {
-      const photos = ImageService.getImages("flower", 1);
-      this.setState({ photos });
+      const data = await ImageService.getImages(query, page); //"flower", 2
+      console.log("here data", data);
+      const { hits, total, totalHits } = data;
       
+      this.setState({
+        photos: [...hits],
+        total: total,
+        totalPhotos: totalHits,
+      });
+      console.log(this.state.photos);
     } catch (error) {
       this.setState({ error });
     } finally {
       this.setState({ isLoading: false });
     }
+    
+  }
+
+  async componentDidMount() { 
+    await this.dataToState("flower", 2);
+
   }
   componentDidUpdate(prevProps, prevState) {
       
@@ -43,7 +59,7 @@ export class App extends Component {
       this.setState({ isLoading: true });
       ImageService.getImages(this.state.query, this.state.page)
         .then(data => {
-          if (!data.photos.length) {
+          if (!data.hits.length) {
             this.setState({ isEmpty: true });
             return;
           }
@@ -78,7 +94,7 @@ export class App extends Component {
     return <div style={{ ...appStyles }}>
       goit-react-hw-03-image-finder
       <p>
-       
+        
     </p>
     </div>;
   }
