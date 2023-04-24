@@ -14,9 +14,9 @@ const appStyles = {
 
 const ImageTestList = ({ photos }) => (
   <ul>
-      {
+      { /*<img src="${webformatURL}" alt="${tags}" loading="lazy" /> */
         photos.map(photo => (
-        <li key={photo.id}>{photo.webformatURL}, {/*photo.largeImageURL*/}</li>
+        <li key={photo.id}><img src={photo.webformatURL} alt={photo.tags} loading="lazy" />, {/*photo.largeImageURL*/}</li>
         ))
       }
   </ul>
