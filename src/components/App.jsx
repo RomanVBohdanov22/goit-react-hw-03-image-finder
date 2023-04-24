@@ -16,7 +16,7 @@ const ImageTestList = ({ photos }) => (
   <ul>
       { /*<img src="${webformatURL}" alt="${tags}" loading="lazy" /> */
         photos.map(photo => (
-        <li key={photo.id}><img src={photo.webformatURL} alt={photo.tags} loading="lazy" />, {/*photo.largeImageURL*/}</li>
+        <li key={photo.id}><img src={photo.webformatURL} alt={photo.tags} loading="lazy" /> {/*photo.largeImageURL*/}</li>
         ))
       }
   </ul>
@@ -48,10 +48,10 @@ export class App extends Component {
         });
       } else {
         console.log('Must be update');
-        this.setState({
+        this.setState(prevState => ({
           photos: [...prevState.photos, ...hits],
           showLoadMore: page < Math.ceil(totalHits / 12),
-        });
+        }));
       }
       this.setState({
         total: total,
