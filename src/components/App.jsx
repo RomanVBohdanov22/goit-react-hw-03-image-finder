@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import Notiflix from 'notiflix';
+import Notiflix from 'notiflix';
 import Searchbar from './searchbar';
 //import axios from 'axios';
 
@@ -36,18 +36,20 @@ export class App extends Component {
     error: '',
   };
 
-  async dataToState(query, page = 1, update = false, prevState = {}) {
+  async dataToState(query, page = 1, ) {
     this.setState({ isLoading: true });
     try {
       const data = await ImageService.getImages(query, page); //"flower", 2
 
       const { hits, total, totalHits } = data;
-      if (!update) {
+
+      if (!hits.length) {
         this.setState({
-          photos: [...hits],
+          isEmpty: true,
         });
+        Notiflix.Notify.failure(`No photos at query "${query}"`);
+        return;
       } else {
-        console.log('Must be update');
         this.setState(prevState => ({
           photos: [...prevState.photos, ...hits],
           showLoadMore: page < Math.ceil(totalHits / 12),
@@ -57,25 +59,20 @@ export class App extends Component {
         total: total,
         totalPhotos: totalHits,
       });
-      //console.log(this.state.photos);
+      Notiflix.Notify.success(`(12) from ${totalHits} photos at query "${query}"`);
     } catch (error) {
       this.setState({ error: error.message });
     } finally {
       this.setState({ isLoading: false });
     }
   }
-/*
-async componentDidMount() { 
-    await this.dataToState("flower", 2, false);
-
-  }*/
 
   async componentDidUpdate(prevProps, prevState) {
     const { query, page } = this.state;
    
     if (prevState.query !== query || prevState.page !== page) {     
       
-      await this.dataToState(query, page, true, prevState);
+      await this.dataToState(query, page);
 
     }
     
