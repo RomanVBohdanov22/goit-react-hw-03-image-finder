@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Notiflix from 'notiflix';
 import Searchbar from './searchbar';
-//import Button from './button/Button.css';
-import './button/Button.css';
+import Button from './button/Button.css';
+//import './button/Button.css';
 
 import * as ImageService from './service/imagesFetch';
 
@@ -106,9 +106,13 @@ export class App extends Component {
         <Searchbar onFormSubmit={this.onFormSubmit} />
         <ImageTestList photos={this.state.photos} />
         {this.state.showLoadMore && (
-          <button onClick={this.onLoadMore} className='Button'>Load more...</button>
+          <>
+            <Button onLoadMore={this.onLoadMore} />
+           
+          </>
         )}
         </div>
     );
   }
 }
+// <button onClick={this.onLoadMore} className='Button'>Load more...</button>
