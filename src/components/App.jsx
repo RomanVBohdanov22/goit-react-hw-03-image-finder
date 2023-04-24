@@ -59,7 +59,7 @@ export class App extends Component {
         total: total,
         totalPhotos: totalHits,
       });
-      Notiflix.Notify.success(`(12) from ${totalHits} photos at query "${query}"`);
+      Notiflix.Notify.success(`Located ${totalHits} photos at query "${query}"`);
     } catch (error) {
       Notiflix.Notify.failure(error.message);
       this.setState({ error: error.message });
