@@ -16,7 +16,7 @@ const ImageTestList = ({ photos }) => (
   <ul>
       {
         photos.map(photo => (
-        <li key={photo.id}>{photo.webformatURL}, {photo.largeImageURL}</li>
+        <li key={photo.id}>{photo.webformatURL}, {/*photo.largeImageURL*/}</li>
         ))
       }
   </ul>
@@ -64,11 +64,11 @@ export class App extends Component {
       this.setState({ isLoading: false });
     }
   }
-
+/*
 async componentDidMount() { 
     await this.dataToState("flower", 2, false);
 
-  }
+  }*/
 
   async componentDidUpdate(prevProps, prevState) {
     const { query, page } = this.state;
