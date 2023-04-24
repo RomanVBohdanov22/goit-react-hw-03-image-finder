@@ -61,6 +61,7 @@ export class App extends Component {
       });
       Notiflix.Notify.success(`(12) from ${totalHits} photos at query "${query}"`);
     } catch (error) {
+      Notiflix.Notify.failure(error.message);
       this.setState({ error: error.message });
     } finally {
       this.setState({ isLoading: false });
