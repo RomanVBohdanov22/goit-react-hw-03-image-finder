@@ -107,12 +107,11 @@ export class App extends Component {
         <ImageTestList photos={this.state.photos} />
         {this.state.showLoadMore && (
           <>
-            <Button onClick={this.onLoadMore} />
-           
+            <Button onLoadMore={this.onLoadMore} />            
           </>
         )}
         </div>
     );
   }
 }
-// <button onClick={this.onLoadMore} className='Button'>Load more...</button>
+// <button onClick={this.onLoadMore} className=''><Button onClick={this.onLoadMore} /></button>

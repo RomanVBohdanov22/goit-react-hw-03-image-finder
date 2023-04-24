@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import '../button/Button.css';
-import { Component } from 'react';
+//import { Component } from 'react';
 
 
 //class Button extends Component ???
