@@ -54,10 +54,10 @@ export class App extends Component {
     }
   }
 
-  /*async componentDidMount() { 
+async componentDidMount() { 
     await this.dataToState("flower", 2, false);
 
-  }*/
+  }
 
   async componentDidUpdate(prevProps, prevState) {
     const { query, page } = this.state;
