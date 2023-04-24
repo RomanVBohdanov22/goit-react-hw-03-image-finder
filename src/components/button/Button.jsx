@@ -5,7 +5,7 @@ import { Component } from 'react';
 
 //class Button extends Component ???
 const Button = ({ onLoadMore } ) => { 
-    return (<button className='Button' onLoadMore={onLoadMore}>Load more...</button>);
+    return (<button className='Button' onClick={onLoadMore}>Load more...</button>);
 }
 
 export default Button;

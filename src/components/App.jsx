@@ -107,7 +107,7 @@ export class App extends Component {
         <ImageTestList photos={this.state.photos} />
         {this.state.showLoadMore && (
           <>
-            <Button onLoadMore={this.onLoadMore} />
+            <Button onClick={this.onLoadMore} />
            
           </>
         )}
