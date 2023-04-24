@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Notiflix from 'notiflix';
+//import Notiflix from 'notiflix';
 import Searchbar from './searchbar';
 //import axios from 'axios';
 
@@ -90,7 +90,7 @@ export class App extends Component {
   };
 
   render() {
-    const { query, photos } = this.state;
+    //const { query, photos } = this.state;
     return (
         <div style={{ ...appStyles }}>
         <Searchbar onFormSubmit={this.onFormSubmit} />
