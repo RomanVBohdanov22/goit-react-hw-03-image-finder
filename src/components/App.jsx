@@ -12,6 +12,17 @@ const appStyles = {
   paddingBottom: '24px',
 };
 
+const ImageTestList = ({ photos }) => (
+  <ul>
+      {
+        photos.map(photo => (
+        <li key={photo.id}>{photo.webformatURL}, {photo.largeImageURL}</li>
+        ))
+      }
+  </ul>
+);
+
+
 export class App extends Component {
   state = {
     query: '',
@@ -94,6 +105,7 @@ async componentDidMount() {
     return (
         <div style={{ ...appStyles }}>
         <Searchbar onFormSubmit={this.onFormSubmit} />
+        <ImageTestList photos={this.state.photos} />
         </div>
     );
   }
