@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Notiflix from 'notiflix';
 import Searchbar from './searchbar';
-//import axios from 'axios';
+//import Button from './button/Button.css';
+import './button/Button.css';
 
 import * as ImageService from './service/imagesFetch';
 
@@ -36,7 +37,7 @@ export class App extends Component {
     error: '',
   };
 
-  async dataToState(query, page = 1, ) {
+  async dataToState(query, page ) {
     this.setState({ isLoading: true });
     try {
       const data = await ImageService.getImages(query, page); //"flower", 2
@@ -104,6 +105,9 @@ export class App extends Component {
         <div style={{ ...appStyles }}>
         <Searchbar onFormSubmit={this.onFormSubmit} />
         <ImageTestList photos={this.state.photos} />
+        {this.state.showLoadMore && (
+          <button onClick={this.onLoadMore} className='Button'>Load more...</button>
+        )}
         </div>
     );
   }

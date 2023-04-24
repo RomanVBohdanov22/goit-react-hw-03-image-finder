@@ -1,7 +1,13 @@
-//import PropTypes from 'prop-types';
-import '../button/Button.css';
+import PropTypes from 'prop-types';
+//import '../button/Button.css';
 import { Component } from 'react';
 
-/*{
-    <button className=''>Load more</button>
-}*/
+const Button = ( buttonlLoad ) => { 
+    return (<button className='Button' onClick={buttonlLoad}>Load more...</button>);
+}
+
+export default Button;
+
+Button.propTypes = {
+   buttolLoad: PropTypes.func.isRequired,  
+}; 
