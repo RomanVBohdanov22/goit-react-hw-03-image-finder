@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Notiflix from 'notiflix';
 import Searchbar from './searchbar';
-import Button from './button/Button.css';
+import Button from './button';
 //import './button/Button.css';
 
 import * as ImageService from './service/imagesFetch';
