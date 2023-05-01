@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Notiflix from 'notiflix';
 import Searchbar from './searchbar';
 import Button from './button';
-//import './button/Button.css';
+import { ImageGallery } from './imagegallery/ImageGallery';
+import { Modal } from './modal/Modal';
+import { Loader } from './loader/Loader';
 
 import * as ImageService from './service/imagesFetch';
 
@@ -13,17 +15,6 @@ const appStyles = {
   paddingBottom: '24px',
 };
 
-const ImageTestList = ({ photos }) => (
-  <ul>
-      { /*<img src="${webformatURL}" alt="${tags}" loading="lazy" /> */
-        photos.map(photo => (
-        <li key={photo.id}><img src={photo.webformatURL} alt={photo.tags} loading="lazy" /> {/*photo.largeImageURL*/}</li>
-        ))
-      }
-  </ul>
-);
-
-
 export class App extends Component {
   state = {
     query: '',
@@ -31,13 +22,14 @@ export class App extends Component {
     photos: [],
     total: 0,
     totalPhotos: 0,
+    largeImageURL: '',
     showLoadMore: false,
-    isLoading: false, //
+    isLoading: false,
     isEmpty: false,
     error: '',
   };
 
-  async dataToState(query, page ) {
+  async dataToState(query, page) {
     this.setState({ isLoading: true });
     try {
       const data = await ImageService.getImages(query, page); //"flower", 2
@@ -60,7 +52,9 @@ export class App extends Component {
         total: total,
         totalPhotos: totalHits,
       });
-      Notiflix.Notify.success(`Located ${totalHits} photos at query "${query}"`);
+      Notiflix.Notify.success(
+        `Located ${totalHits} photos at query "${query}"`
+      );
     } catch (error) {
       Notiflix.Notify.failure(error.message);
       this.setState({ error: error.message });
@@ -71,17 +65,13 @@ export class App extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
     const { query, page } = this.state;
-   
-    if (prevState.query !== query || prevState.page !== page) {     
-      
-      await this.dataToState(query, page);
 
+    if (prevState.query !== query || prevState.page !== page) {
+      await this.dataToState(query, page);
     }
-    
   }
 
   onFormSubmit = ({ query }) => {
-    console.log(query);
     this.setState({
       query: query,
       page: 1,
@@ -98,20 +88,31 @@ export class App extends Component {
   onLoadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
-
+  setLargeImageURL = largeImageURL => {
+    this.setState({ largeImageURL });
+  };
   render() {
-    //const { query, photos } = this.state;
     return (
-        <div style={{ ...appStyles }}>
+      <div style={appStyles}>
         <Searchbar onFormSubmit={this.onFormSubmit} />
-        <ImageTestList photos={this.state.photos} />
+
+        <ImageGallery
+          photos={this.state.photos}
+          onClick={this.setLargeImageURL}
+        />
         {this.state.showLoadMore && (
           <>
-            <Button onLoadMore={this.onLoadMore} />            
+            <Button onLoadMore={this.onLoadMore} />
           </>
         )}
-        </div>
+        {this.state.largeImageURL && (
+          <Modal
+            largeImageURL={this.state.largeImageURL}
+            onClick={this.setLargeImageURL}
+          />
+        )}
+        {this.state.isLoading && <Loader />}
+      </div>
     );
   }
 }
-// <button onClick={this.onLoadMore} className=''><Button onClick={this.onLoadMore} /></button>
